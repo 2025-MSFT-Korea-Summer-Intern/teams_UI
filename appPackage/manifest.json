@@ -14,12 +14,12 @@
         "outline": "outline.png"
     },
     "name": {
-        "short": "hello-world-in-meeting${{APP_NAME_SUFFIX}}",
-        "full": "Full name for hello-world-in-meeting"
+        "short": "GlossifySample",
+        "full": "Glossify – Real-time Term Explanations"
     },
     "description": {
-        "short": "Short description of hello-world-in-meeting",
-        "full": "Full description of hello-world-in-meeting"
+        "short": "Glossify: Real-time glossary in Teams meetings",
+        "full": "Glossify explains IT/domain terms in real-time during your Teams meetings using AI."
     },
     "accentColor": "#FFFFFF",
     "bots": [],

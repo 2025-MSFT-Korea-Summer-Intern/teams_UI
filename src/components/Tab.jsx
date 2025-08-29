@@ -78,8 +78,10 @@ function Tab() {
         // 미팅 정보 가져오기
         const context = await microsoftTeams.app.getContext();
         contextRef.current = context;
-        setMeetingId(context.meeting?.meetingId || context.meeting?.id || "");
+        const mid = context.meeting?.meetingId || context.meeting?.id || ""
+        setMeetingId(mid);
         setUserName(context.user?.userPrincipalName || "");
+
 
         // 테마 설정
         handleThemeChange(context.app.theme, setTheme);

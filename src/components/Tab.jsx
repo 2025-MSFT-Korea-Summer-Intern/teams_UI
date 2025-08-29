@@ -23,25 +23,33 @@ function Tab() {
   const handleWebSocketMessage = useCallback((event) => {
     try {
       const data = JSON.parse(event.data);
-      const term_list = data.term_list;
-      if (Array.isArray(term_list)) {
-        setTerms((prevTerms) => {
-          const map = new Map(prevTerms.map((t) => [t.id, t]));
-          term_list.forEach((item) => {
-            map.set(item.id, { ...map.get(item.id), ...item });
-          });
-          return Array.from(map.values()).sort(
-            (a, b) => new Date(a.timestamp) - new Date(b.timestamp)
-          );
-        });
-        setLoading(false);
-        setError(null);
-      }
-    } catch (e) {
-      setError("데이터 처리 중 오류가 발생했습니다.");
-      setLoading(false);
-    }
-  }, []);
+      const term_list = Array.isArray(data.term_list) ? data.term_list : [];
+      
+      const normalized = term_list.map((x) => ({
+      id: x.id || `${x.timestamp}_${x.entity}`, // 안정적인 key
+      entity: x.entity || x.term,
+      domain: x.domain || x.category || "-",
+      body: x.body || x.explanation || "",
+      timestamp: x.timestamp || "",
+    }));
+
+    setTerms((prev) => {
+      const map = new Map(prev.map((t) => [t.id, t]));
+      normalized.forEach((it) => {
+        map.set(it.id, { ...map.get(it.id), ...it });
+      });
+      return Array.from(map.values()).sort(
+        (a, b) => new Date(a.timestamp) - new Date(b.timestamp)
+      );
+    });
+    setLoading(false);
+    setError(null);
+  } catch (e) {
+    setError("데이터 처리 중 오류가 발생했습니다.");
+    setLoading(false);
+  }
+}, []);
+
 
   // WebSocket 에러 핸들러
   const handleWebSocketError = useCallback(() => {
@@ -131,7 +139,7 @@ function Tab() {
       {error && <div style={{ color: "red" }}>에러: {error}</div>}
       <ol type="1" id="termList">
         {terms.map((term) => (
-          <RenderTerm key={`${term.timestamp}_${term.entity}`} term={term} theme={theme} />
+          <RenderTerm key={term.id} term={term} theme={theme} />
         ))}
         {!loading && !error && terms.length === 0 && (
           <li style={{ opacity: 0.7 }}>표시할 항목이 없습니다.</li>

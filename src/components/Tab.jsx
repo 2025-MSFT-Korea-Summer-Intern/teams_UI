@@ -115,7 +115,7 @@ function Tab() {
   return (
     <div className={`tab-root theme-${theme}`}>
       <h1>Glossify sample</h1>
-      <h3>Principle Name:</h3>
+      <h3>User Name:</h3>
       <p>{userName || "-"}</p>
       <h3>Meeting ID:</h3>
       <p>{meetingId || "-"}</p>

@@ -6,9 +6,9 @@ export function RenderTerm({ term, theme }) {
     return (
         <li style={{ listStyle: "none" }}>
             <div style={styles.card}>
-                <span style={styles.term}>{term.term}</span>
-                <span style={styles.category}>{term.category}</span>
-                <span style={styles.explanation}>{term.explanation}</span>
+                <span style={styles.term}>{term.entity}</span>
+                <span style={styles.category}>{term.domain}</span>
+                <span style={styles.explanation}>{term.body}</span>
             </div>
         </li>
     );

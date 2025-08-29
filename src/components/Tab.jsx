@@ -23,7 +23,6 @@ function Tab() {
   const handleWebSocketMessage = useCallback((event) => {
     try {
       const data = JSON.parse(event.data);
-      
       const term_list = data.term_list;
       if (Array.isArray(term_list)) {
         setTerms((prevTerms) => {
@@ -114,7 +113,7 @@ function Tab() {
   ]);
   return (
     <div className={`tab-root theme-${theme}`}>
-      <h1>Glossify sample</h1>
+      <h1>Glossify sample-0829</h1>
       <h3>User Name:</h3>
       <p>{userName || "-"}</p>
       <h3>Meeting ID:</h3>
@@ -132,7 +131,7 @@ function Tab() {
       {error && <div style={{ color: "red" }}>에러: {error}</div>}
       <ol type="1" id="termList">
         {terms.map((term) => (
-          <RenderTerm key={term.id} term={term} theme={theme} />
+          <RenderTerm key={`${term.timestamp}_${term.entity}`} term={term} theme={theme} />
         ))}
         {!loading && !error && terms.length === 0 && (
           <li style={{ opacity: 0.7 }}>표시할 항목이 없습니다.</li>
